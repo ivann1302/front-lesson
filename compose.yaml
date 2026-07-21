@@ -1,0 +1,141 @@
+x-node-service: &node-service
+  init: true
+  restart: unless-stopped
+  security_opt:
+    - no-new-privileges:true
+
+services:
+  api:
+    <<: *node-service
+    image: frontend-mentor-api:${APP_VERSION:-local}
+    build:
+      context: .
+      target: api
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
+      TRUST_PROXY_HOPS: 1
+      DATABASE_URL: /data/mentor.db
+      TELEGRAM_INTERNAL_SECRET: ${TELEGRAM_INTERNAL_SECRET:?Set TELEGRAM_INTERNAL_SECRET in .env}
+    expose:
+      - "3000"
+    volumes:
+      - mentor-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+
+  web:
+    restart: unless-stopped
+    image: frontend-mentor-web:${APP_VERSION:-local}
+    build:
+      context: .
+      target: web
+      args:
+        VITE_TELEGRAM_BOT_USERNAME: ${VITE_TELEGRAM_BOT_USERNAME:-}
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:${APP_PORT:-8080}:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+
+  scheduler:
+    <<: *node-service
+    profiles: [telegram]
+    image: frontend-mentor-api:${APP_VERSION:-local}
+    build:
+      context: .
+      target: api
+    command: ["node", "dist/scheduler/index.js"]
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: /data/mentor.db
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      APP_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
+    depends_on:
+      api:
+        condition: service_healthy
+    volumes:
+      - mentor-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    healthcheck:
+      disable: true
+
+  bot:
+    <<: *node-service
+    profiles: [telegram]
+    image: frontend-mentor-bot:${APP_VERSION:-local}
+    build:
+      context: .
+      target: bot
+    environment:
+      NODE_ENV: production
+      BOT_MODE: webhook
+      BOT_HOST: 0.0.0.0
+      BOT_PORT: 3001
+      API_URL: http://api:3000
+      APP_URL: ${PUBLIC_APP_URL:-http://localhost:8080}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_INTERNAL_SECRET: ${TELEGRAM_INTERNAL_SECRET:?Set TELEGRAM_INTERNAL_SECRET in .env}
+      TELEGRAM_WEBHOOK_URL: ${TELEGRAM_WEBHOOK_URL:-}
+      TELEGRAM_WEBHOOK_SECRET: ${TELEGRAM_WEBHOOK_SECRET:-}
+    depends_on:
+      api:
+        condition: service_healthy
+    expose:
+      - "3001"
+    read_only: true
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+
+  backup:
+    <<: *node-service
+    profiles: [operations]
+    restart: "no"
+    image: frontend-mentor-api:${APP_VERSION:-local}
+    build:
+      context: .
+      target: api
+    command: ["node", "dist/db/backup-cli.js"]
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: /data/mentor.db
+      BACKUP_DIR: /backups
+      BACKUP_KEEP: ${BACKUP_KEEP:-14}
+    volumes:
+      - mentor-data:/data
+      - mentor-backups:/backups
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    healthcheck:
+      disable: true
+
+  smoke:
+    profiles: [operations]
+    image: frontend-mentor-smoke:${APP_VERSION:-local}
+    build:
+      context: .
+      target: smoke
+    environment:
+      SMOKE_BASE_URL: http://web:8080
+    depends_on:
+      web:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  mentor-data:
+  mentor-backups:

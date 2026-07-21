@@ -1,0 +1,34 @@
+{
+  "name": "@mentor/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --conditions=development --import tsx --watch src/server.ts",
+    "dev:scheduler": "node --conditions=development --import tsx --watch src/scheduler/index.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/server.js",
+    "start:scheduler": "node dist/scheduler/index.js",
+    "db:seed": "node --conditions=development --import tsx src/db/seed-cli.ts",
+    "db:backup": "node dist/db/backup-cli.js",
+    "db:verify": "node dist/db/verify-cli.js",
+    "test:runtime": "node scripts/runtime-smoke.mjs && node --input-type=module -e \"await import('./dist/scheduler/run.js'); console.log('Scheduler runtime import: ok')\"",
+    "typecheck": "tsc --noEmit",
+    "test": "NODE_OPTIONS=--conditions=development vitest run"
+  },
+  "dependencies": {
+    "@mentor/content": "workspace:*",
+    "@mentor/shared": "workspace:*",
+    "@libsql/client": "0.17.4",
+    "drizzle-orm": "0.45.2",
+    "fastify": "^5.4.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "drizzle-kit": "0.31.10",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+set -eu
+
+corepack pnpm@9.15.4 check

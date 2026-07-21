@@ -1,0 +1,16 @@
+.git
+.github
+.env
+.env.*
+!.env.example
+**/node_modules
+**/dist
+**/coverage
+**/.vite
+apps/api/data
+apps/api/backups
+docs/design
+playwright-report
+test-results
+*.log
+.DS_Store

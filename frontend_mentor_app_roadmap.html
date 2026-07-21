@@ -1,0 +1,705 @@
+1<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07101f">
+<title>Frontend Mentor App — карта разработки</title>
+<style>
+:root{--bg:#07101f;--panel:#0e182a;--panel2:#121f35;--line:#263851;--text:#edf4ff;--muted:#9daec5;--accent:#7c9cff;--accent2:#5eead4;--warn:#f7c948;--bad:#ff7c8d;--radius:17px;--shadow:0 20px 55px rgba(0,0,0,.22)}
+[data-theme=light]{--bg:#f4f7fb;--panel:#fff;--panel2:#f5f8fd;--line:#d7e0ed;--text:#14213a;--muted:#5f6f86;--accent:#315efb;--accent2:#008e7b;--warn:#a06b00;--bad:#c22f48;--shadow:0 20px 55px rgba(39,58,89,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.55;color:var(--text);background:radial-gradient(circle at 15% 0,rgba(124,156,255,.15),transparent 28rem),radial-gradient(circle at 90% 5%,rgba(94,234,212,.09),transparent 26rem),var(--bg)}
+button,input,textarea{font:inherit}button{cursor:pointer}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.top{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:12px;padding:11px clamp(12px,2vw,26px);background:color-mix(in srgb,var(--bg),transparent 8%);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:9px;min-width:220px;font-weight:900}.logo{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;color:#06101a;background:linear-gradient(135deg,var(--accent2),var(--accent))}
+.progress{flex:1;min-width:120px}.progress-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.bar{height:8px;margin-top:4px;border:1px solid var(--line);border-radius:99px;overflow:hidden;background:var(--panel2)}.fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.2s}
+.btn{border:1px solid var(--line);border-radius:11px;padding:8px 11px;color:var(--text);background:var(--panel2)}.btn:hover{border-color:var(--accent);transform:translateY(-1px)}.primary{font-weight:800;color:#06101a;border-color:transparent;background:linear-gradient(135deg,var(--accent2),var(--accent))}.danger{color:var(--bad)}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr);max-width:1580px;margin:auto}.side{position:sticky;top:57px;height:calc(100vh - 57px);overflow:auto;padding:21px 15px;border-right:1px solid var(--line);background:color-mix(in srgb,var(--panel),transparent 18%)}.side h5{margin:0 9px 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.11em}.nav{display:grid;gap:4px}.nav a{display:flex;justify-content:space-between;padding:9px 10px;border:1px solid transparent;border-radius:10px;text-decoration:none;color:var(--muted)}.nav a:hover,.nav a.active{color:var(--text);border-color:var(--line);background:var(--panel2)}.nav small{padding:1px 6px;border:1px solid var(--line);border-radius:99px}.next{margin-top:20px;padding:14px;border:1px solid color-mix(in srgb,var(--accent2),var(--line) 55%);border-radius:14px;background:linear-gradient(135deg,rgba(94,234,212,.08),transparent),var(--panel2);cursor:pointer}.next small{display:block;color:var(--accent2);text-transform:uppercase;letter-spacing:.08em;font-weight:800}.next b,.next span{display:block;margin-top:4px}.next span{color:var(--muted);font-size:13px}.side-note{margin-top:12px;padding:13px;border:1px solid var(--line);border-radius:13px;background:var(--panel2);color:var(--muted);font-size:13px}
+main{min-width:0;padding:clamp(20px,4vw,52px)}section{scroll-margin-top:78px;margin-top:48px}.hero{position:relative;overflow:hidden;margin-top:0;padding:clamp(26px,5vw,56px);border:1px solid var(--line);border-radius:28px;background:linear-gradient(135deg,rgba(124,156,255,.16),rgba(94,234,212,.06)),var(--panel);box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;right:-90px;top:-110px;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(94,234,212,.2),transparent 67%)}.eyebrow{display:inline-block;padding:5px 9px;border:1px solid var(--line);border-radius:99px;color:var(--accent2);background:var(--panel2);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.hero h1{position:relative;z-index:1;max-width:980px;margin:16px 0 0;font-size:clamp(35px,6vw,73px);line-height:1.07;letter-spacing:-.04em}.hero>p{position:relative;z-index:1;max-width:880px;margin:20px 0 0;color:var(--muted);font-size:clamp(16px,2vw,21px)}.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:23px}.actions a{text-decoration:none}.route{display:grid;grid-template-columns:repeat(6,minmax(120px,1fr));gap:9px;margin-top:24px}.route div{position:relative;padding:13px;border:1px solid var(--line);border-radius:13px;background:color-mix(in srgb,var(--panel2),transparent 6%)}.route b,.route span{display:block}.route span{margin-top:3px;color:var(--muted);font-size:12px}.route div:not(:last-child):after{content:"→";position:absolute;right:-9px;top:34%;z-index:2;color:var(--accent);font-weight:900}
+.head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:15px}.head h2{margin:0;font-size:clamp(28px,4vw,42px);letter-spacing:-.03em}.head p{max-width:760px;margin:6px 0 0;color:var(--muted)}.pill{padding:5px 9px;border:1px solid var(--line);border-radius:99px;color:var(--muted);background:var(--panel2);font-size:12px;white-space:nowrap}.grid{display:grid;gap:15px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card,.phase{padding:19px;border:1px solid var(--line);border-radius:var(--radius);background:var(--panel);box-shadow:0 8px 24px rgba(0,0,0,.07)}.card h3{margin:0 0 8px}.card p{margin:0;color:var(--muted)}.card ul,.card ol{margin:10px 0 0;padding-left:20px}.card li{margin:5px 0}.recommended{border-color:color-mix(in srgb,var(--accent2),var(--line) 56%);background:linear-gradient(135deg,rgba(94,234,212,.075),transparent 55%),var(--panel)}
+.diagram{display:grid;grid-template-columns:repeat(5,minmax(110px,1fr));gap:13px;margin-top:16px}.node{position:relative;display:grid;align-content:center;min-height:120px;padding:14px;text-align:center;border:1px solid var(--line);border-radius:14px;background:var(--panel2)}.node span{margin-top:5px;color:var(--muted);font-size:12px}.node:not(:last-child):after{content:"→";position:absolute;right:-11px;top:43%;z-index:2;color:var(--accent);font-weight:900}.table{overflow:auto;border:1px solid var(--line);border-radius:14px}.table table{width:100%;min-width:720px;border-collapse:collapse}.table th,.table td{padding:11px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}.table th{color:var(--muted);background:var(--panel2);font-size:12px;text-transform:uppercase;letter-spacing:.06em}.table tr:last-child td{border-bottom:0}.table code,.inline{padding:2px 6px;border-radius:6px;color:var(--accent2);background:var(--panel2)}
+.filters{display:flex;flex-wrap:wrap;gap:9px;margin:16px 0}.search{flex:1;min-width:240px;padding:10px 12px;color:var(--text);border:1px solid var(--line);border-radius:11px;background:var(--panel2);outline:none}.search:focus{border-color:var(--accent)}#phases{display:grid;gap:15px}.phase{padding:0;overflow:hidden}.phase-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:13px;padding:17px 19px;border-bottom:1px solid var(--line);background:var(--panel2)}.phase-num{width:41px;height:41px;display:grid;place-items:center;border-radius:12px;color:#06101a;background:linear-gradient(135deg,var(--accent2),var(--accent));font-weight:900}.phase-head h3{margin:0}.phase-head p{margin:3px 0 0;color:var(--muted);font-size:13px}.phase-head>strong{color:var(--muted);font-size:13px}.phase-body{padding:19px}.task-list{display:grid;gap:9px}.task{display:grid;grid-template-columns:23px minmax(0,1fr) auto;gap:10px;align-items:start;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:var(--panel2)}.task input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent)}.task label{cursor:pointer}.task label b,.task label span{display:block}.task label span{margin-top:2px;color:var(--muted);font-size:13px}.task em{align-self:center;padding:3px 7px;border:1px solid var(--line);border-radius:99px;color:var(--muted);font-size:11px;font-style:normal}.task.done label{opacity:.62;text-decoration:line-through}.prompt{position:relative;margin-top:15px;padding:15px;border:1px dashed color-mix(in srgb,var(--accent),var(--line) 40%);border-radius:13px;background:color-mix(in srgb,var(--panel2),transparent 8%)}.prompt h4{margin:0 90px 7px 0}.prompt pre{margin:0;white-space:pre-wrap;color:var(--muted);font-size:12.5px}.copy{position:absolute;right:11px;top:11px;padding:6px 8px;color:var(--text);border:1px solid var(--line);border-radius:8px;background:var(--panel)}.topic{display:grid;grid-template-columns:minmax(170px,.55fr) minmax(150px,.3fr);gap:15px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:13px;background:var(--panel2)}.topic+ .topic{margin-top:8px}.topic b,.topic span{display:block}.topic span{margin-top:3px;color:var(--muted);font-size:13px}.topic small{justify-self:end;padding:4px 8px;border:1px solid var(--line);border-radius:99px;color:var(--muted);text-align:right}.code{overflow:auto;margin:12px 0 0;padding:15px;border:1px solid #25344c;border-radius:13px;color:#dfe9ff;background:#070d18;font-size:12.5px;white-space:pre-wrap}.callout{display:flex;gap:12px;margin-top:15px;padding:15px;border:1px solid var(--line);border-radius:13px;background:var(--panel2)}.callout i{width:32px;height:32px;display:grid;place-items:center;flex:0 0 auto;border-radius:10px;color:#06101a;background:var(--warn);font-style:normal;font-weight:900}.callout p{margin:3px 0 0;color:var(--muted)}details{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--panel)}details+details{margin-top:9px}summary{padding:14px 16px;cursor:pointer;font-weight:800;background:var(--panel2)}details>div{padding:15px}.hidden{display:none!important}.footer{margin-top:50px;padding:25px 0 5px;text-align:center;color:var(--muted);font-size:13px}.toast{position:fixed;left:50%;bottom:20px;z-index:100;transform:translate(-50%,15px);opacity:0;padding:9px 13px;border:1px solid var(--line);border-radius:10px;background:var(--panel);box-shadow:var(--shadow);transition:.2s;pointer-events:none}.toast.show{opacity:1;transform:translate(-50%,0)}.modal{position:fixed;inset:0;z-index:90;display:none;place-items:center;padding:18px;background:rgba(0,0,0,.65)}.modal.open{display:grid}.modal-box{width:min(680px,100%);padding:20px;border:1px solid var(--line);border-radius:17px;background:var(--panel)}.modal-box h3{margin:0}.modal-box p{color:var(--muted)}.modal-box textarea{width:100%;min-height:220px;padding:11px;color:#eaf1ff;border:1px solid #273650;border-radius:11px;background:#070d18}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}.mobile-menu{display:none}
+@media(max-width:1150px){.route{grid-template-columns:repeat(3,1fr)}.route div:nth-child(3):after{display:none}.diagram{grid-template-columns:repeat(3,1fr)}.node:nth-child(3):after{display:none}}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.side{position:fixed;inset:57px auto 0 0;z-index:50;width:min(315px,86vw);transform:translateX(-102%);transition:.2s;box-shadow:var(--shadow)}.side.open{transform:none}.mobile-menu{display:inline-block}.brand{min-width:0}.brand span{display:none}main{padding:20px 13px 42px}.two,.three{grid-template-columns:1fr}}
+@media(max-width:650px){.progress{display:none}.toolbar-label{display:none}.hero{padding:24px 18px;border-radius:20px}.route,.diagram{grid-template-columns:1fr}.route div:after,.node:after{display:none!important}.head{align-items:start;flex-direction:column}.phase-head{grid-template-columns:auto 1fr}.phase-head>strong{grid-column:2}.task{grid-template-columns:23px 1fr}.task em{grid-column:2;justify-self:start}.topic{grid-template-columns:1fr}.topic small{justify-self:start;text-align:left}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="btn mobile-menu" id="menu" aria-label="Меню">☰</button>
+  <div class="brand"><span class="logo">⌁</span><span>Frontend Mentor Map</span></div>
+  <div class="progress"><div class="progress-meta"><span id="progressText">0 из 0 задач</span><b id="progressPercent">0%</b></div><div class="bar"><div class="fill" id="fill"></div></div></div>
+  <div><button class="btn" id="export">⇩ <span class="toolbar-label">Экспорт</span></button> <button class="btn" id="import">⇧ <span class="toolbar-label">Импорт</span></button> <button class="btn" id="theme">◐</button></div>
+</header>
+<div class="layout">
+<aside class="side" id="side">
+  <h5>Навигация</h5>
+  <nav class="nav">
+    <a href="#start">Старт <small>00</small></a>
+    <a href="#architecture">Архитектура <small>01</small></a>
+    <a href="#roadmap">Этапы <small>02</small></a>
+    <a href="#content">База материалов <small>03</small></a>
+    <a href="#data">Данные <small>04</small></a>
+    <a href="#api">API <small>05</small></a>
+    <a href="#deploy">Деплой <small>06</small></a>
+    <a href="#done">Готовность MVP <small>07</small></a>
+  </nav>
+  <div class="next" id="next"><small>Следующая задача</small><b>Загрузка…</b><span></span></div>
+  <div class="side-note"><b>Рекомендуемый MVP</b><br>Адаптивный React-сайт + Node.js API + SQLite + Telegram-бот. React Native — после проверки сайта.</div>
+  <div class="side-note"><b>Главное правило</b><br>Отмечай задачу только после проверки результата, а не после генерации кода.</div>
+</aside>
+<main>
+<section class="hero" id="start">
+  <span class="eyebrow">Интерактивная карта проекта</span>
+  <h1>Приложение для подготовки к Middle Frontend-собеседованию</h1>
+  <p>Автономный рабочий план для вайбкодинга: продукт, архитектура, контент, API, адаптивный сайт, Telegram-напоминания, интервальное повторение, тестирование и деплой.</p>
+  <div class="actions"><a class="btn primary" href="#roadmap">Начать с этапа 0</a><a class="btn" href="#architecture">Архитектура</a><button class="btn danger" id="reset">Сбросить прогресс</button></div>
+  <div class="route">
+    <div><b>1. Контент</b><span>карточки, тесты, code tasks</span></div>
+    <div><b>2. API</b><span>пользователи и прогресс</span></div>
+    <div><b>3. Web-сайт</b><span>основной интерфейс</span></div>
+    <div><b>4. Telegram</b><span>доставка заданий</span></div>
+    <div><b>5. Повторение</b><span>schedule и адаптивность</span></div>
+    <div><b>6. RN позже</b><span>новый клиент поверх API</span></div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="head"><div><h2>Решение и архитектура</h2><p>Не начинай с нескольких клиентов. Подтверди продукт через адаптивный сайт, затем добавь React Native поверх готового API.</p></div><span class="pill">web first · native later</span></div>
+  <div class="grid three">
+    <article class="card recommended"><h3>Web-сайт — первый клиент</h3><p>React + TypeScript + Vite, адаптивная вёрстка и серверное сохранение прогресса без PWA-инфраструктуры.</p><ul><li>React Router</li><li>TanStack Query</li><li>responsive + accessible UI</li></ul></article>
+    <article class="card recommended"><h3>Telegram — уведомления</h3><p>Надёжная доставка без ранней сложности native push. Часть простых вопросов можно пройти прямо в чате.</p><ul><li>grammY</li><li>inline keyboard</li><li>HTTPS webhook</li></ul></article>
+    <article class="card"><h3>React Native — этап 2</h3><p>Добавляй после проверки спроса. API, типы, контент и алгоритм повторения уже будут готовы.</p><ul><li>Expo</li><li>shared DTO</li><li>native push позднее</li></ul></article>
+  </div>
+  <article class="card" style="margin-top:15px"><h3>Поток системы</h3><div class="diagram"><div class="node"><b>Web → RN</b><span>сначала сайт, затем native</span></div><div class="node"><b>Node.js API</b><span>auth, sessions, answers</span></div><div class="node"><b>SQLite → PostgreSQL</b><span>контент и прогресс</span></div><div class="node"><b>Scheduler</b><span>timezone, due, retry</span></div><div class="node"><b>Telegram</b><span>напоминания и mini quiz</span></div></div></article>
+  <div class="grid two" style="margin-top:15px">
+    <article class="card"><h3>Стек MVP</h3><div class="table"><table><thead><tr><th>Слой</th><th>Выбор</th><th>Зачем</th></tr></thead><tbody>
+      <tr><td>Monorepo</td><td><code>pnpm workspaces</code></td><td>Общие типы и контент.</td></tr>
+      <tr><td>Web</td><td><code>React + Vite + TS</code></td><td>Быстрая сборка и дешёвый хостинг.</td></tr>
+      <tr><td>API</td><td><code>Fastify + Zod</code></td><td>Прозрачный backend без лишней магии.</td></tr>
+      <tr><td>Data</td><td><code>Drizzle + SQLite</code></td><td>Нулевые расходы на БД в MVP.</td></tr>
+      <tr><td>Bot</td><td><code>grammY</code></td><td>TypeScript и middleware.</td></tr>
+      <tr><td>Tests</td><td><code>Vitest + Playwright</code></td><td>Unit и критические сценарии.</td></tr>
+    </tbody></table></div></article>
+    <article class="card"><h3>Не делать в первой версии</h3><ul><li>Три полноценных клиента одновременно.</li><li>Сложную админку: сначала JSON/TS + seed.</li><li>Микросервисы, Kafka и отдельную очередь.</li><li>AI-интервьюера раньше проверенной базы вопросов.</li><li>Оплату, соцсеть и сложную геймификацию.</li></ul></article>
+  </div>
+</section>
+
+<section id="roadmap">
+  <div class="head"><div><h2>Этапы разработки</h2><p>Галочки сохраняются в браузере. Каждый этап содержит критерии работы и готовый промпт для кодового ассистента.</p></div><span class="pill" id="roadPill">0% выполнено</span></div>
+  <div class="filters"><input class="search" id="search" type="search" placeholder="Найти задачу, технологию или тему…"><button class="btn" id="incomplete">Только незавершённые</button></div>
+  <div id="phases">
+    <article class="phase searchable" id="phase-0" data-search="product mvp web site telegram react native scope ux">
+      <header class="phase-head">
+        <span class="phase-num">0</span>
+        <div><h3>Зафиксировать MVP</h3><p>Одна учебная петля вместо трёх параллельных приложений.</p></div>
+        <strong data-phase-progress>0/5</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p0-01">
+            <input id="p0-01" type="checkbox">
+            <label for="p0-01"><b>Сформулировать продукт одним предложением</b><span>Каждый день пользователь получает 1–5 коротких заданий для подготовки к Middle Frontend-собеседованию.</span></label>
+            <em>product</em>
+          </div>
+          <div class="task" data-task="p0-02">
+            <input id="p0-02" type="checkbox">
+            <label for="p0-02"><b>Выбрать адаптивный сайт первым клиентом</b><span>React Native создаётся после проверки web MVP; Telegram-бот — канал доставки и быстрых мини-тестов.</span></label>
+            <em>decision</em>
+          </div>
+          <div class="task" data-task="p0-03">
+            <input id="p0-03" type="checkbox">
+            <label for="p0-03"><b>Зафиксировать главную петлю</b><span>Уведомление → вопрос → ответ → объяснение → план следующего повторения.</span></label>
+            <em>ux</em>
+          </div>
+          <div class="task" data-task="p0-04">
+            <input id="p0-04" type="checkbox">
+            <label for="p0-04"><b>Ограничить MVP шестью экранами</b><span>Onboarding, Сегодня, Задание, Результат, Статистика, Настройки.</span></label>
+            <em>scope</em>
+          </div>
+          <div class="task" data-task="p0-05">
+            <input id="p0-05" type="checkbox">
+            <label for="p0-05"><b>Определить метрику пользы</b><span>Доля завершённых дневных сессий и рост точности по повторяемым темам.</span></label>
+            <em>metric</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Ты senior product engineer. Сформируй компактный MVP сайта подготовки к Middle Frontend-собеседованию. Первый клиент — адаптивный React-сайт, React Native — после проверки web MVP, Telegram-бот — доставка ежедневных заданий. Не добавляй оплату, социальную сеть и сложную геймификацию. Выведи user flow, 6 экранов, сущности данных и критерии готовности MVP.</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="phase searchable" id="phase-1" data-search="repository monorepo pnpm vite fastify drizzle typescript eslint">
+      <header class="phase-head">
+        <span class="phase-num">1</span>
+        <div><h3>Создать каркас monorepo</h3><p>Общий фундамент для web, API, Telegram-бота и shared-пакетов.</p></div>
+        <strong data-phase-progress>0/5</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p1-01">
+            <input id="p1-01" type="checkbox">
+            <label for="p1-01"><b>Инициализировать pnpm workspaces</b><span>Создать apps/web, apps/api, apps/bot, packages/shared и packages/content.</span></label>
+            <em>repo</em>
+          </div>
+          <div class="task" data-task="p1-02">
+            <input id="p1-02" type="checkbox">
+            <label for="p1-02"><b>Включить TypeScript strict</b><span>Добавить noUncheckedIndexedAccess и exactOptionalPropertyTypes.</span></label>
+            <em>quality</em>
+          </div>
+          <div class="task" data-task="p1-03">
+            <input id="p1-03" type="checkbox">
+            <label for="p1-03"><b>Настроить lint, format и pre-commit</b><span>Проверять типы и изменённые файлы перед коммитом.</span></label>
+            <em>quality</em>
+          </div>
+          <div class="task" data-task="p1-04">
+            <input id="p1-04" type="checkbox">
+            <label for="p1-04"><b>Создать .env.example</b><span>DATABASE_URL, JWT_SECRET, TELEGRAM_BOT_TOKEN, TELEGRAM_WEBHOOK_SECRET, APP_URL.</span></label>
+            <em>env</em>
+          </div>
+          <div class="task" data-task="p1-05">
+            <input id="p1-05" type="checkbox">
+            <label for="p1-05"><b>Добавить GET /health</b><span>Версия, состояние БД и timestamp без раскрытия секретов.</span></label>
+            <em>api</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Создай pnpm monorepo: apps/web, apps/api, apps/bot, packages/shared, packages/content. Используй React + Vite + TypeScript, Fastify + Zod + Drizzle, grammY. Настрой strict TypeScript, ESLint, Prettier, Vitest и общие scripts. Покажи содержимое корневых package.json, pnpm-workspace.yaml и tsconfig.</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="phase searchable" id="phase-2" data-search="content json zod seed cards quiz code interview validation">
+      <header class="phase-head">
+        <span class="phase-num">2</span>
+        <div><h3>Построить content pipeline</h3><p>Материалы должны одинаково работать на сайте, в Telegram и будущем RN.</p></div>
+        <strong data-phase-progress>0/5</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p2-01">
+            <input id="p2-01" type="checkbox">
+            <label for="p2-01"><b>Создать единую схему материала</b><span>Типы: term, flashcard, single_choice, multiple_choice, code_output, find_bug, interview_question.</span></label>
+            <em>schema</em>
+          </div>
+          <div class="task" data-task="p2-02">
+            <input id="p2-02" type="checkbox">
+            <label for="p2-02"><b>Добавить Zod-валидацию</b><span>Сборка падает при дублирующемся id, пустом объяснении или неверном correctOption.</span></label>
+            <em>validation</em>
+          </div>
+          <div class="task" data-task="p2-03">
+            <input id="p2-03" type="checkbox">
+            <label for="p2-03"><b>Подготовить стартовые 60 материалов</b><span>По 10 единиц: JavaScript, TypeScript, React, Browser, Node.js и CSS.</span></label>
+            <em>content</em>
+          </div>
+          <div class="task" data-task="p2-04">
+            <input id="p2-04" type="checkbox">
+            <label for="p2-04"><b>Создать validate-content CLI</b><span>Проверять id, связи тем, markdown, язык code block и варианты ответа.</span></label>
+            <em>tooling</em>
+          </div>
+          <div class="task" data-task="p2-05">
+            <input id="p2-05" type="checkbox">
+            <label for="p2-05"><b>Создать seed CLI с upsert</b><span>Обновлять текст по стабильному content id без потери прогресса.</span></label>
+            <em>db</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Спроектируй TypeScript/Zod discriminated union для материалов: term, flashcard, single_choice, multiple_choice, code_output, find_bug, interview_question. Общие поля: id, version, topic, subtopic, difficulty, tags, prompt, explanation, estimatedSeconds. Сделай примеры и validateContentCollection с проверкой уникальности id.</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="phase searchable" id="phase-3" data-search="backend api auth jwt telegram sqlite drizzle progress answers">
+      <header class="phase-head">
+        <span class="phase-num">3</span>
+        <div><h3>Реализовать API и прогресс</h3><p>Один backend для сайта, бота и React Native.</p></div>
+        <strong data-phase-progress>0/7</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p3-01">
+            <input id="p3-01" type="checkbox">
+            <label for="p3-01"><b>Создать миграции БД</b><span>users, auth_identities, content_items, user_content_state, study_sessions, answers, notification_settings, delivery_log.</span></label>
+            <em>db</em>
+          </div>
+          <div class="task" data-task="p3-02">
+            <input id="p3-02" type="checkbox">
+            <label for="p3-02"><b>Добавить гостевой режим</b><span>Локальный guest id и последующая синхронизация после привязки Telegram.</span></label>
+            <em>auth</em>
+          </div>
+          <div class="task" data-task="p3-03">
+            <input id="p3-03" type="checkbox">
+            <label for="p3-03"><b>Сделать привязку Telegram</b><span>Одноразовый код с TTL: сайт показывает код, пользователь отправляет его боту.</span></label>
+            <em>auth</em>
+          </div>
+          <div class="task" data-task="p3-04">
+            <input id="p3-04" type="checkbox">
+            <label for="p3-04"><b>Реализовать GET /study/today</b><span>Просроченные повторы плюс новые материалы в пределах дневного лимита.</span></label>
+            <em>api</em>
+          </div>
+          <div class="task" data-task="p3-05">
+            <input id="p3-05" type="checkbox">
+            <label for="p3-05"><b>Реализовать POST /answers</b><span>Проверить ответ на сервере, сохранить результат и пересчитать dueAt.</span></label>
+            <em>api</em>
+          </div>
+          <div class="task" data-task="p3-06">
+            <input id="p3-06" type="checkbox">
+            <label for="p3-06"><b>Добавить идемпотентность ответов</b><span>Повторный clientAnswerId не создаёт дубль и не меняет расписание второй раз.</span></label>
+            <em>reliability</em>
+          </div>
+          <div class="task" data-task="p3-07">
+            <input id="p3-07" type="checkbox">
+            <label for="p3-07"><b>Добавить rate limit и структурированные логи</b><span>Не логировать токены, полные ответы auth и персональные данные.</span></label>
+            <em>security</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Реализуй Fastify API на Drizzle + SQLite: /health, /auth/guest, /auth/telegram-code, /study/today, /answers, /stats, /settings. Валидация через Zod, единый error handler, idempotency key для ответов и транзакция при сохранении результата. Не возвращай правильный ответ до отправки ответа пользователя.</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="phase searchable" id="phase-4" data-search="react web site screens api tanstack query accessibility">
+      <header class="phase-head">
+        <span class="phase-num">4</span>
+        <div><h3>Собрать адаптивный web-клиент</h3><p>Сначала удобная учебная сессия на сайте, потом отдельный React Native-клиент.</p></div>
+        <strong data-phase-progress>0/7</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p4-01">
+            <input id="p4-01" type="checkbox">
+            <label for="p4-01"><b>Сделать onboarding</b><span>Темы, уровень, число заданий в день, время уведомления и timezone.</span></label>
+            <em>screen</em>
+          </div>
+          <div class="task" data-task="p4-02">
+            <input id="p4-02" type="checkbox">
+            <label for="p4-02"><b>Сделать экран «Сегодня»</b><span>Очередь, прогресс сессии, примерная длительность и кнопка продолжения.</span></label>
+            <em>screen</em>
+          </div>
+          <div class="task" data-task="p4-03">
+            <input id="p4-03" type="checkbox">
+            <label for="p4-03"><b>Поддержать все типы заданий</b><span>Карточка, варианты ответа, вывод кода, поиск ошибки и открытый ответ.</span></label>
+            <em>learning</em>
+          </div>
+          <div class="task" data-task="p4-04">
+            <input id="p4-04" type="checkbox">
+            <label for="p4-04"><b>Показывать объяснение после ответа</b><span>Механизм, контрпример, почему другие варианты неверны, связанные термины.</span></label>
+            <em>learning</em>
+          </div>
+          <div class="task" data-task="p4-05">
+            <input id="p4-05" type="checkbox">
+            <label for="p4-05"><b>Добавить статистику по темам</b><span>Accuracy, повторы, слабые темы и серия учебных дней.</span></label>
+            <em>stats</em>
+          </div>
+          <div class="task" data-task="p4-06">
+            <input id="p4-06" type="checkbox">
+            <label for="p4-06"><b>Добавить состояния API и безопасный retry</b><span>Loading, error и повторная отправка с тем же clientAnswerId без дублей.</span></label>
+            <em>offline</em>
+          </div>
+          <div class="task" data-task="p4-07">
+            <input id="p4-07" type="checkbox">
+            <label for="p4-07"><b>Проверить доступность</b><span>Клавиатура, focus states, aria-label, контраст и выбор вариантов цифрами.</span></label>
+            <em>a11y</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Создай адаптивный React-сайт с React Router, TanStack Query и TypeScript. Экраны: onboarding, today, task, result, stats, settings. Состояние задания: idle → answering → submitting → explained → next. Для сетевой ошибки показывай понятный retry и повторно используй тот же clientAnswerId без дублей.</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="phase searchable" id="phase-5" data-search="telegram bot grammy webhook polling commands inline buttons">
+      <header class="phase-head">
+        <span class="phase-num">5</span>
+        <div><h3>Подключить Telegram-бота</h3><p>Надёжная доставка ежедневных заданий без ранней сложности native push.</p></div>
+        <strong data-phase-progress>0/6</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p5-01">
+            <input id="p5-01" type="checkbox">
+            <label for="p5-01"><b>Реализовать /start и linking</b><span>Поддержать deep-link payload и одноразовый код с сайта.</span></label>
+            <em>bot</em>
+          </div>
+          <div class="task" data-task="p5-02">
+            <input id="p5-02" type="checkbox">
+            <label for="p5-02"><b>Реализовать /today</b><span>Показать объём сессии, первую карточку и кнопку открытия приложения.</span></label>
+            <em>bot</em>
+          </div>
+          <div class="task" data-task="p5-03">
+            <input id="p5-03" type="checkbox">
+            <label for="p5-03"><b>Сделать inline single-choice</b><span>Варианты-кнопки, затем объяснение и переход к следующему вопросу.</span></label>
+            <em>quiz</em>
+          </div>
+          <div class="task" data-task="p5-04">
+            <input id="p5-04" type="checkbox">
+            <label for="p5-04"><b>Реализовать /settings и /pause</b><span>Время, timezone, дневной лимит, дни недели и пауза уведомлений.</span></label>
+            <em>settings</em>
+          </div>
+          <div class="task" data-task="p5-05">
+            <input id="p5-05" type="checkbox">
+            <label for="p5-05"><b>Настроить webhook с secret token</b><span>Проверять секретный заголовок Telegram и быстро отвечать 200.</span></label>
+            <em>security</em>
+          </div>
+          <div class="task" data-task="p5-06">
+            <input id="p5-06" type="checkbox">
+            <label for="p5-06"><b>Оставить polling только для local dev</b><span>В production должен работать только один режим получения updates.</span></label>
+            <em>dev</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Создай Telegram-бота на grammY. Команды: /start, /today, /settings, /pause. Поддержи account linking по одноразовому коду, inline keyboard для single-choice и короткие opaque callback_data. Проверку ответа делай через API. Production — webhook с secret token; development — long polling.</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="phase searchable" id="phase-6" data-search="scheduler cron timezone retry spaced repetition sm2 notification">
+      <header class="phase-head">
+        <span class="phase-num">6</span>
+        <div><h3>Планировщик и повторение</h3><p>Уведомления и расписание должны быть идемпотентными.</p></div>
+        <strong data-phase-progress>0/6</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p6-01">
+            <input id="p6-01" type="checkbox">
+            <label for="p6-01"><b>Сделать простой алгоритм повторения</b><span>Again +1 день, Hard +3 дня, Good ×2.2 интервала, Easy ×3.2 с разумными границами.</span></label>
+            <em>learning</em>
+          </div>
+          <div class="task" data-task="p6-02">
+            <input id="p6-02" type="checkbox">
+            <label for="p6-02"><b>Хранить timezone как IANA-строку</b><span>Например Europe/Istanbul; не сохранять только UTC-offset.</span></label>
+            <em>time</em>
+          </div>
+          <div class="task" data-task="p6-03">
+            <input id="p6-03" type="checkbox">
+            <label for="p6-03"><b>Создать delivery_log</b><span>Уникальный ключ userId + localDate + notificationType исключает двойную отправку.</span></label>
+            <em>idempotency</em>
+          </div>
+          <div class="task" data-task="p6-04">
+            <input id="p6-04" type="checkbox">
+            <label for="p6-04"><b>Запускать scheduler каждую минуту</b><span>Выбирать только пользователей, у которых наступило локальное время.</span></label>
+            <em>cron</em>
+          </div>
+          <div class="task" data-task="p6-05">
+            <input id="p6-05" type="checkbox">
+            <label for="p6-05"><b>Добавить retry с backoff</b><span>Повторять 429/5xx; permanent errors отключают канал после фиксации причины.</span></label>
+            <em>reliability</em>
+          </div>
+          <div class="task" data-task="p6-06">
+            <input id="p6-06" type="checkbox">
+            <label for="p6-06"><b>Не присылать завершённую сессию</b><span>Повторно проверить статус непосредственно перед отправкой.</span></label>
+            <em>ux</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Реализуй scheduler Telegram-напоминаний. Храни IANA timezone, local send time и weekdays. Job запускается каждую минуту, использует delivery_log для идемпотентности, повторяет 429/5xx с exponential backoff и не отправляет сообщение, если дневная сессия уже завершена. Дай SQL и псевдокод.</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="phase searchable" id="phase-7" data-search="mock interview timer rubric questions self assessment">
+      <header class="phase-head">
+        <span class="phase-num">7</span>
+        <div><h3>Добавить mock-интервью</h3><p>Сначала режим самооценки по rubric, без дорогого AI.</p></div>
+        <strong data-phase-progress>0/5</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p7-01">
+            <input id="p7-01" type="checkbox">
+            <label for="p7-01"><b>Создать наборы интервью</b><span>Frontend Core, React, JavaScript Deep Dive, Browser, Node basics и React Native.</span></label>
+            <em>content</em>
+          </div>
+          <div class="task" data-task="p7-02">
+            <input id="p7-02" type="checkbox">
+            <label for="p7-02"><b>Добавить таймер и режим без подсказок</b><span>Вопросы открываются последовательно, объяснения скрыты до завершения.</span></label>
+            <em>ux</em>
+          </div>
+          <div class="task" data-task="p7-03">
+            <input id="p7-03" type="checkbox">
+            <label for="p7-03"><b>Создать rubric самооценки</b><span>Точность, глубина, пример, trade-offs и умение уточнять условия.</span></label>
+            <em>assessment</em>
+          </div>
+          <div class="task" data-task="p7-04">
+            <input id="p7-04" type="checkbox">
+            <label for="p7-04"><b>Сохранять тезисы ответа</b><span>Текстовый черновик и список терминов, которые нужно повторить.</span></label>
+            <em>progress</em>
+          </div>
+          <div class="task" data-task="p7-05">
+            <input id="p7-05" type="checkbox">
+            <label for="p7-05"><b>Формировать повторение после интервью</b><span>Слабые темы получают due review в ближайшие дни.</span></label>
+            <em>learning</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Спроектируй mock-интервью без LLM. Пользователь выбирает набор и длительность, получает открытые вопросы, пишет тезисы, затем видит rubric и эталонные пункты. Слабые темы автоматически добавляются в интервальное повторение. Опиши state machine, таблицы и UI.</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="phase searchable" id="phase-8" data-search="testing vitest playwright security logs backup deploy production">
+      <header class="phase-head">
+        <span class="phase-num">8</span>
+        <div><h3>Проверить и выпустить MVP</h3><p>Стабильность важнее количества функций.</p></div>
+        <strong data-phase-progress>0/6</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p8-01">
+            <input id="p8-01" type="checkbox">
+            <label for="p8-01"><b>Покрыть алгоритм повторения unit-тестами</b><span>Границы интервалов, неверные ответы, повторный answerId и timezone cases.</span></label>
+            <em>unit</em>
+          </div>
+          <div class="task" data-task="p8-02">
+            <input id="p8-02" type="checkbox">
+            <label for="p8-02"><b>Сделать 5 критических E2E</b><span>Onboarding, дневная сессия, retry ответа, Telegram linking, изменение расписания.</span></label>
+            <em>e2e</em>
+          </div>
+          <div class="task" data-task="p8-03">
+            <input id="p8-03" type="checkbox">
+            <label for="p8-03"><b>Пройти security checklist</b><span>HTTPS, secrets, validation, rate limit, CORS allowlist и webhook verification.</span></label>
+            <em>security</em>
+          </div>
+          <div class="task" data-task="p8-04">
+            <input id="p8-04" type="checkbox">
+            <label for="p8-04"><b>Настроить backup SQLite</b><span>Ежедневная копия, ротация и тест восстановления.</span></label>
+            <em>backup</em>
+          </div>
+          <div class="task" data-task="p8-05">
+            <input id="p8-05" type="checkbox">
+            <label for="p8-05"><b>Добавить production logs</b><span>Ошибки API, scheduler и процент неуспешных Telegram-доставок.</span></label>
+            <em>ops</em>
+          </div>
+          <div class="task" data-task="p8-06">
+            <input id="p8-06" type="checkbox">
+            <label for="p8-06"><b>Проверить продукт на небольшой группе</b><span>Наблюдать, завершают ли люди сессии и понимают ли объяснения.</span></label>
+            <em>validation</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Составь production-readiness checklist для React-сайта + Fastify + SQLite + Telegram webhook. Включи unit, integration, Playwright E2E, backup/restore, structured logging, healthcheck, CORS, rate limiting, secret rotation, webhook verification, graceful shutdown и scheduler idempotency.</pre>
+        </div>
+      </div>
+    </article>
+
+    <article class="phase searchable" id="phase-9" data-search="react native expo mobile push shared offline stage 2">
+      <header class="phase-head">
+        <span class="phase-num">9</span>
+        <div><h3>После подтверждения MVP: React Native</h3><p>Новый клиент поверх готового API, а не переписывание системы.</p></div>
+        <strong data-phase-progress>0/5</strong>
+      </header>
+      <div class="phase-body">
+        <div class="task-list">
+          <div class="task" data-task="p9-01">
+            <input id="p9-01" type="checkbox">
+            <label for="p9-01"><b>Проверить, действительно ли нужен RN</b><span>Есть активные пользователи и конкретная потребность в native push, widgets или stores.</span></label>
+            <em>decision</em>
+          </div>
+          <div class="task" data-task="p9-02">
+            <input id="p9-02" type="checkbox">
+            <label for="p9-02"><b>Создать Expo-приложение</b><span>Expo Router, TanStack Query, SecureStore и общий API client.</span></label>
+            <em>rn</em>
+          </div>
+          <div class="task" data-task="p9-03">
+            <input id="p9-03" type="checkbox">
+            <label for="p9-03"><b>Переиспользовать packages/shared</b><span>DTO, Zod-схемы, review logic и названия analytics events.</span></label>
+            <em>shared</em>
+          </div>
+          <div class="task" data-task="p9-04">
+            <input id="p9-04" type="checkbox">
+            <label for="p9-04"><b>Добавить native push</b><span>Telegram остаётся резервным каналом; пользователь выбирает основной.</span></label>
+            <em>push</em>
+          </div>
+          <div class="task" data-task="p9-05">
+            <input id="p9-05" type="checkbox">
+            <label for="p9-05"><b>Синхронизировать офлайн-сессии</b><span>Использовать тот же clientAnswerId и протокол идемпотентности, что и сайт.</span></label>
+            <em>offline</em>
+          </div></div>
+        <div class="prompt">
+          <button class="copy">Копировать</button>
+          <h4>Промпт для кодового ассистента</h4>
+          <pre>Добавь apps/mobile на Expo + React Native в существующий pnpm monorepo. Переиспользуй packages/shared, но не пытайся делить UI с web. Реализуй API client, auth storage, Today/Task/Stats/Settings и offline answer queue с теми же idempotency keys.</pre>
+        </div>
+      </div>
+    </article></div>
+</section>
+
+<section id="content">
+  <div class="head"><div><h2>Карта базы материалов Middle</h2><p>Для MVP начни с 60 проверенных единиц. Целевые числа ниже — ориентир для постепенного расширения.</p></div><span class="pill">контент сначала · AI потом</span></div>
+  <article class="card"><div class="topic searchable" data-search="HTML и Accessibility Семантика, формы, ARIA, focus, keyboard navigation, DOM, SEO-основы.">
+      <div><b>HTML и Accessibility</b><span>Семантика, формы, ARIA, focus, keyboard navigation, DOM, SEO-основы.</span></div><small>15 карточек · 20 тестов · 8 интервью</small>
+    </div>
+<div class="topic searchable" data-search="CSS Каскад, specificity, stacking context, BFC, Flexbox, Grid, responsive, animations.">
+      <div><b>CSS</b><span>Каскад, specificity, stacking context, BFC, Flexbox, Grid, responsive, animations.</span></div><small>25 карточек · 30 тестов · 12 задач</small>
+    </div>
+<div class="topic searchable" data-search="JavaScript Core Scope, closure, this, prototype, coercion, event loop, Promise, modules, memory.">
+      <div><b>JavaScript Core</b><span>Scope, closure, this, prototype, coercion, event loop, Promise, modules, memory.</span></div><small>45 карточек · 70 тестов · 40 code</small>
+    </div>
+<div class="topic searchable" data-search="TypeScript Narrowing, generics, keyof, mapped/conditional types, infer, variance, utility types.">
+      <div><b>TypeScript</b><span>Narrowing, generics, keyof, mapped/conditional types, infer, variance, utility types.</span></div><small>30 карточек · 45 тестов · 25 code</small>
+    </div>
+<div class="topic searchable" data-search="React Reconciliation, state, effects, refs, hooks, context, memoization, Suspense basics.">
+      <div><b>React</b><span>Reconciliation, state, effects, refs, hooks, context, memoization, Suspense basics.</span></div><small>40 карточек · 55 тестов · 25 code</small>
+    </div>
+<div class="topic searchable" data-search="Browser и Web APIs Events, fetch, AbortController, storage, cookies, CORS, Service Worker, Workers.">
+      <div><b>Browser и Web APIs</b><span>Events, fetch, AbortController, storage, cookies, CORS, Service Worker, Workers.</span></div><small>30 карточек · 40 тестов · 18 кейсов</small>
+    </div>
+<div class="topic searchable" data-search="Performance Rendering path, Core Web Vitals, splitting, caching, images, profiling.">
+      <div><b>Performance</b><span>Rendering path, Core Web Vitals, splitting, caching, images, profiling.</span></div><small>20 карточек · 25 тестов · 10 кейсов</small>
+    </div>
+<div class="topic searchable" data-search="Web Security XSS, CSRF, CSP, CORS, cookies, token storage, auth, validation, supply chain.">
+      <div><b>Web Security</b><span>XSS, CSRF, CSP, CORS, cookies, token storage, auth, validation, supply chain.</span></div><small>25 карточек · 30 тестов · 12 кейсов</small>
+    </div>
+<div class="topic searchable" data-search="Testing Unit, integration, RTL, async tests, mocks, Playwright, flaky tests, contracts.">
+      <div><b>Testing</b><span>Unit, integration, RTL, async tests, mocks, Playwright, flaky tests, contracts.</span></div><small>20 карточек · 25 тестов · 12 практик</small>
+    </div>
+<div class="topic searchable" data-search="Frontend Architecture Модули, state ownership, server/client state, зависимости, design systems.">
+      <div><b>Frontend Architecture</b><span>Модули, state ownership, server/client state, зависимости, design systems.</span></div><small>25 карточек · 20 кейсов · 15 интервью</small>
+    </div>
+<div class="topic searchable" data-search="Node.js Event loop, streams, buffers, HTTP, validation, errors, logging, SQL, transactions.">
+      <div><b>Node.js</b><span>Event loop, streams, buffers, HTTP, validation, errors, logging, SQL, transactions.</span></div><small>30 карточек · 40 тестов · 20 code</small>
+    </div>
+<div class="topic searchable" data-search="React Native Runtime, lists, navigation, platform differences, native modules, permissions.">
+      <div><b>React Native</b><span>Runtime, lists, navigation, platform differences, native modules, permissions.</span></div><small>25 карточек · 30 тестов · 12 кейсов</small>
+    </div>
+<div class="topic searchable" data-search="Tooling и Git Git workflows, SemVer, package resolution, Vite/Webpack concepts, CI/CD.">
+      <div><b>Tooling и Git</b><span>Git workflows, SemVer, package resolution, Vite/Webpack concepts, CI/CD.</span></div><small>20 карточек · 25 тестов · 10 кейсов</small>
+    </div></article>
+  <div class="grid two" style="margin-top:15px">
+    <article class="card"><h3>Формула качественной карточки</h3><ol><li>Один проверяемый тезис.</li><li>Недвусмысленный вопрос.</li><li>Ответ нельзя угадать по формулировке.</li><li>Объясняется механизм, а не только результат.</li><li>Есть пример или контрпример.</li><li>Указаны теги, сложность и связанные темы.</li></ol></article>
+    <article class="card"><h3>Баланс типов в модуле</h3><ul><li>25% — термины и flashcards.</li><li>30% — single/multiple choice.</li><li>25% — вывод кода, ошибка, рефакторинг.</li><li>15% — открытые вопросы интервью.</li><li>5% — архитектурные кейсы.</li></ul></article>
+  </div>
+</section>
+
+<section id="data">
+  <div class="head"><div><h2>Модель данных</h2><p>Контент имеет стабильный id и версию. Прогресс хранится отдельно, поэтому формулировки можно улучшать без потери истории.</p></div></div>
+  <div class="grid two">
+    <article class="card"><h3>Пример content item</h3><pre class="code">{
+  &quot;id&quot;: &quot;js-event-loop-004&quot;,
+  &quot;version&quot;: 1,
+  &quot;type&quot;: &quot;code_output&quot;,
+  &quot;topic&quot;: &quot;javascript&quot;,
+  &quot;subtopic&quot;: &quot;event-loop&quot;,
+  &quot;difficulty&quot;: &quot;middle&quot;,
+  &quot;tags&quot;: [&quot;promise&quot;, &quot;microtask&quot;, &quot;timer&quot;],
+  &quot;prompt&quot;: &quot;В каком порядке появятся сообщения?&quot;,
+  &quot;code&quot;: &quot;console.log(&#x27;A&#x27;); ...&quot;,
+  &quot;options&quot;: [{&quot;id&quot;:&quot;a&quot;,&quot;text&quot;:&quot;A, B, C&quot;}, {&quot;id&quot;:&quot;b&quot;,&quot;text&quot;:&quot;A, C, B&quot;}],
+  &quot;correctOptionIds&quot;: [&quot;b&quot;],
+  &quot;explanation&quot;: &quot;Promise callbacks идут в microtask queue...&quot;,
+  &quot;estimatedSeconds&quot;: 70
+}</pre></article>
+    <article class="card"><h3>Основные таблицы</h3><div class="table"><table><thead><tr><th>Таблица</th><th>Назначение</th></tr></thead><tbody>
+      <tr><td><code>users</code></td><td>Профиль, timezone, статус.</td></tr>
+      <tr><td><code>auth_identities</code></td><td>guest, telegram, позже email/social.</td></tr>
+      <tr><td><code>content_items</code></td><td>Индекс контента, версия и JSON payload.</td></tr>
+      <tr><td><code>user_content_state</code></td><td>dueAt, intervalDays, ease, streak, lapses.</td></tr>
+      <tr><td><code>study_sessions</code></td><td>Состав и статус дневной/mock-сессии.</td></tr>
+      <tr><td><code>answers</code></td><td>Ответ, correctness, latency, clientAnswerId.</td></tr>
+      <tr><td><code>notification_settings</code></td><td>Канал, localTime, timezone, weekdays, dailyLimit.</td></tr>
+      <tr><td><code>delivery_log</code></td><td>Идемпотентность, попытки и результат доставки.</td></tr>
+    </tbody></table></div></article>
+  </div>
+  <article class="card" style="margin-top:15px"><h3>Выбор задания на сегодня</h3><pre class="code">1. Взять просроченные review items по dueAt.
+2. Ограничить их дневным лимитом.
+3. Если остались места — добавить новые items выбранных тем.
+4. Не повторять недавно показанные новые items.
+5. Зафиксировать состав study_session.
+6. Сайт и Telegram читают одну и ту же очередь.</pre></article>
+</section>
+
+<section id="api">
+  <div class="head"><div><h2>Минимальный API</h2><p>Все write-запросы валидируются. Каждый ответ пользователя получает уникальный clientAnswerId.</p></div></div>
+  <div class="table"><table><thead><tr><th>Метод</th><th>Endpoint</th><th>Назначение</th><th>Критично</th></tr></thead><tbody>
+    <tr><td>GET</td><td><code>/health</code></td><td>API и БД.</td><td>Без секретов.</td></tr>
+    <tr><td>POST</td><td><code>/auth/guest</code></td><td>Создать/восстановить гостя.</td><td>Rate limit.</td></tr>
+    <tr><td>POST</td><td><code>/auth/telegram-code</code></td><td>Одноразовый linking code.</td><td>TTL + single use.</td></tr>
+    <tr><td>GET</td><td><code>/study/today</code></td><td>Фиксированная дневная сессия.</td><td>Не отдавать answer заранее.</td></tr>
+    <tr><td>POST</td><td><code>/answers</code></td><td>Сохранить ответ и вернуть объяснение.</td><td>Idempotency + transaction.</td></tr>
+    <tr><td>GET</td><td><code>/stats</code></td><td>Агрегаты по темам и дням.</td><td>Не тянуть всю историю.</td></tr>
+    <tr><td>PATCH</td><td><code>/settings</code></td><td>Темы, лимит, время, timezone.</td><td>IANA timezone.</td></tr>
+    <tr><td>POST</td><td><code>/telegram/webhook</code></td><td>Telegram updates.</td><td>Secret header.</td></tr>
+  </tbody></table></div>
+  <div class="grid two" style="margin-top:15px">
+    <article class="card"><h3>Ответ на сайте</h3><ol><li>Клиент создаёт UUID.</li><li>Отправляет itemId, sessionId и payload.</li><li>API в транзакции пишет answer и review state.</li><li>Возвращает correctness, explanation, nextDueAt.</li><li>Повторный UUID возвращает тот же результат.</li></ol></article>
+    <article class="card"><h3>Telegram-напоминание</h3><ol><li>Cron запускает scheduler.</li><li>Вычисляется локальное время кандидатов.</li><li>Проверяются delivery_log и статус сессии.</li><li>Отправляется тема и кнопка «Начать».</li><li>Фиксируется success или тип ошибки.</li></ol></article>
+  </div>
+</section>
+
+<section id="deploy">
+  <div class="head"><div><h2>Деплой на SprintHost/VPS</h2><p>React-сайт отдаётся как статика. API, bot webhook и scheduler могут жить в одном Node-процессе на этапе MVP.</p></div></div>
+  <div class="grid three">
+    <article class="card"><h3>Web</h3><p>Собрать <code class="inline">apps/web/dist</code>; SPA-маршруты перенаправлять на index.html.</p></article>
+    <article class="card"><h3>API + Bot</h3><p>Держать процесс под PM2, systemd или встроенным manager хостинга. Нужен graceful shutdown.</p></article>
+    <article class="card"><h3>SQLite</h3><p>Хранить вне public-каталога, включить WAL и busy_timeout, делать резервные копии.</p></article>
+  </div>
+  <article class="card" style="margin-top:15px"><h3>Production checklist</h3><div class="task-list">
+    <div class="task" data-task="deploy-01"><input id="deploy-01" type="checkbox"><label for="deploy-01"><b>Домен и HTTPS</b><span>Один домен с /api или отдельный api-поддомен.</span></label><em>infra</em></div>
+    <div class="task" data-task="deploy-02"><input id="deploy-02" type="checkbox"><label for="deploy-02"><b>Автоперезапуск Node-процесса</b><span>PM2/systemd либо manager хостинга.</span></label><em>runtime</em></div>
+    <div class="task" data-task="deploy-03"><input id="deploy-03" type="checkbox"><label for="deploy-03"><b>Backup перед миграцией</b><span>Порядок: backup → migrate → restart → healthcheck.</span></label><em>db</em></div>
+    <div class="task" data-task="deploy-04"><input id="deploy-04" type="checkbox"><label for="deploy-04"><b>Telegram webhook с secret token</b><span>Endpoint доступен по HTTPS и проверяет заголовок.</span></label><em>bot</em></div>
+    <div class="task" data-task="deploy-05"><input id="deploy-05" type="checkbox"><label for="deploy-05"><b>Scheduler переживает restart</b><span>После старта не дублирует уже отправленные сообщения.</span></label><em>cron</em></div>
+    <div class="task" data-task="deploy-06"><input id="deploy-06" type="checkbox"><label for="deploy-06"><b>Backup реально восстанавливается</b><span>Проверить restore на отдельном временном файле.</span></label><em>backup</em></div>
+  </div></article>
+  <div class="callout"><i>!</i><div><b>Когда переходить на PostgreSQL</b><p>Когда нужны несколько инстансов API, появляются write-конфликты, тяжёлая аналитика или управляемая репликация — не просто из-за абстрактного числа пользователей.</p></div></div>
+</section>
+
+<section id="done">
+  <div class="head"><div><h2>Definition of Done для MVP</h2><p>Релиз готов, когда пользователь проходит весь цикл без ручного вмешательства разработчика.</p></div></div>
+  <div class="grid two">
+    <article class="card recommended"><h3>Пользовательский результат</h3><div class="task-list">
+      <div class="task" data-task="dod-01"><input id="dod-01" type="checkbox"><label for="dod-01"><b>Выбираются темы и расписание</b><span>Настройки сохраняются на сервере.</span></label></div>
+      <div class="task" data-task="dod-02"><input id="dod-02" type="checkbox"><label for="dod-02"><b>Приходит Telegram-напоминание</b><span>Без дубля после перезапуска.</span></label></div>
+      <div class="task" data-task="dod-03"><input id="dod-03" type="checkbox"><label for="dod-03"><b>Работают минимум 5 типов заданий</b><span>Ответ, объяснение и следующий шаг.</span></label></div>
+      <div class="task" data-task="dod-04"><input id="dod-04" type="checkbox"><label for="dod-04"><b>Ошибки возвращаются на повторение</b><span>Due date меняется предсказуемо.</span></label></div>
+      <div class="task" data-task="dod-05"><input id="dod-05" type="checkbox"><label for="dod-05"><b>Сайт и бот синхронизированы</b><span>Одна дневная сессия на всех клиентах.</span></label></div>
+    </div></article>
+    <article class="card"><h3>Инженерный результат</h3><div class="task-list">
+      <div class="task" data-task="dod-06"><input id="dod-06" type="checkbox"><label for="dod-06"><b>Контент автоматически валидируется</b><span>Плохой seed не попадает в production.</span></label></div>
+      <div class="task" data-task="dod-07"><input id="dod-07" type="checkbox"><label for="dod-07"><b>Критические сценарии покрыты E2E</b><span>Тесты выполняются перед релизом.</span></label></div>
+      <div class="task" data-task="dod-08"><input id="dod-08" type="checkbox"><label for="dod-08"><b>Есть backup и restore-инструкция</b><span>Не только скрипт создания копии.</span></label></div>
+      <div class="task" data-task="dod-09"><input id="dod-09" type="checkbox"><label for="dod-09"><b>Секретов нет в git и client bundle</b><span>Проверены env и артефакты сборки.</span></label></div>
+      <div class="task" data-task="dod-10"><input id="dod-10" type="checkbox"><label for="dod-10"><b>Ошибки диагностируются по логам</b><span>Понятно, почему не ушло сообщение или не сохранился ответ.</span></label></div>
+    </div></article>
+  </div>
+  <div style="margin-top:15px">
+    <details><summary>Рабочий цикл по карте</summary><div><ol><li>Открой первую незакрытую задачу слева.</li><li>Скопируй промпт текущего этапа.</li><li>Проси менять один слой или use case за раз.</li><li>Запусти typecheck, tests и ручной happy path.</li><li>Поставь галочку только после проверки.</li></ol></div></details>
+    <details><summary>Правила безопасного вайбкодинга</summary><div><ul><li>Не принимать миграции и auth-код без ручного чтения.</li><li>Не вставлять реальные токены в промпты и git.</li><li>Просить маленькие diff, а не полную регенерацию.</li><li>Для background job отдельно проверять идемпотентность.</li><li>Каждая зависимость должна иметь конкретную роль.</li></ul></div></details>
+    <details><summary>Когда добавлять AI</summary><div>После появления проверенного контента и реальных ответов. Первые подходящие функции: дополнительное объяснение с пометкой, follow-up к интервью-вопросу и оценка по заранее заданному rubric. Правильные ответы и расписание повторения должны оставаться детерминированными.</div></details>
+  </div>
+</section>
+<footer class="footer">Прогресс хранится в localStorage этого браузера. Кнопка «Экспорт» копирует JSON для переноса между устройствами.</footer>
+</main>
+</div>
+<div class="toast" id="toast">Готово</div>
+<div class="modal" id="modal"><div class="modal-box"><h3>Импорт прогресса</h3><p>Вставь JSON, полученный через «Экспорт».</p><textarea id="importText"></textarea><div class="modal-actions"><button class="btn" id="close">Отмена</button><button class="btn primary" id="applyImport">Применить</button></div></div></div>
+<script>
+(()=>{const KEY="frontend-mentor-roadmap-v1",THEME="frontend-mentor-roadmap-theme";const tasks=[...document.querySelectorAll(".task[data-task]")],toast=document.getElementById("toast"),side=document.getElementById("side");let incomplete=false;
+const say=m=>{toast.textContent=m;toast.classList.add("show");clearTimeout(say.t);say.t=setTimeout(()=>toast.classList.remove("show"),1500)};
+const read=()=>{try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch{return {}}};
+const apply=data=>{const s=data?.tasks||data||{};tasks.forEach(t=>{const c=t.querySelector("input");c.checked=!!s[t.dataset.task];t.classList.toggle("done",c.checked)});update()};
+const save=()=>{const s={};tasks.forEach(t=>s[t.dataset.task]=t.querySelector("input").checked);localStorage.setItem(KEY,JSON.stringify({version:1,savedAt:new Date().toISOString(),tasks:s}))};
+function update(){tasks.forEach(t=>t.classList.toggle("done",t.querySelector("input").checked));const done=tasks.filter(t=>t.querySelector("input").checked).length,total=tasks.length,p=total?Math.round(done/total*100):0;document.getElementById("progressText").textContent=`${done} из ${total} задач`;document.getElementById("progressPercent").textContent=p+"%";document.getElementById("fill").style.width=p+"%";document.getElementById("roadPill").textContent=p+"% выполнено";document.querySelectorAll(".phase").forEach(ph=>{const a=[...ph.querySelectorAll(".task")],d=a.filter(t=>t.querySelector("input").checked).length;ph.querySelector("[data-phase-progress]").textContent=`${d}/${a.length}`});const next=tasks.find(t=>!t.querySelector("input").checked&&t.offsetParent!==null)||tasks.find(t=>!t.querySelector("input").checked),box=document.getElementById("next");if(next){box.querySelector("b").textContent=next.querySelector("b").textContent;box.querySelector("span").textContent=next.querySelector("label span")?.textContent||"";box.onclick=()=>next.scrollIntoView({behavior:"smooth",block:"center"})}else{box.querySelector("b").textContent="Карта завершена";box.querySelector("span").textContent="Переходи к обратной связи и следующей версии";box.onclick=null}}
+apply(read());tasks.forEach(t=>t.querySelector("input").addEventListener("change",()=>{save();update();filter()}));
+document.querySelectorAll(".copy").forEach(b=>b.onclick=async()=>{const text=b.parentElement.querySelector("pre").textContent.trim();try{await navigator.clipboard.writeText(text)}catch{const a=document.createElement("textarea");a.value=text;document.body.append(a);a.select();document.execCommand("copy");a.remove()}say("Промпт скопирован")});
+document.getElementById("reset").onclick=()=>{if(confirm("Сбросить весь прогресс?")){localStorage.removeItem(KEY);apply({});save();say("Прогресс сброшен")}};
+document.getElementById("export").onclick=async()=>{save();const text=localStorage.getItem(KEY)||"{}";try{await navigator.clipboard.writeText(text);say("JSON прогресса скопирован")}catch{const blob=new Blob([text],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="roadmap-progress.json";a.click();URL.revokeObjectURL(a.href)}};
+const modal=document.getElementById("modal");document.getElementById("import").onclick=()=>modal.classList.add("open");document.getElementById("close").onclick=()=>modal.classList.remove("open");modal.onclick=e=>{if(e.target===modal)modal.classList.remove("open")};document.getElementById("applyImport").onclick=()=>{try{const d=JSON.parse(document.getElementById("importText").value);apply(d);save();modal.classList.remove("open");say("Прогресс импортирован")}catch{say("Некорректный JSON")}};
+const setTheme=t=>{document.documentElement.dataset.theme=t;localStorage.setItem(THEME,t)};setTheme(localStorage.getItem(THEME)||(matchMedia("(prefers-color-scheme:light)").matches?"light":"dark"));document.getElementById("theme").onclick=()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
+document.getElementById("menu").onclick=()=>side.classList.toggle("open");document.querySelectorAll(".nav a").forEach(a=>a.onclick=()=>side.classList.remove("open"));
+const search=document.getElementById("search");function filter(){const q=search.value.trim().toLowerCase();document.querySelectorAll(".searchable").forEach(el=>{const match=!q||((el.dataset.search||"")+" "+el.textContent).toLowerCase().includes(q);let inc=true;if(incomplete&&el.classList.contains("phase"))inc=[...el.querySelectorAll(".task input")].some(i=>!i.checked);el.classList.toggle("hidden",!(match&&inc))});update()}search.oninput=filter;document.getElementById("incomplete").onclick=e=>{incomplete=!incomplete;e.currentTarget.textContent=incomplete?"Показать все этапы":"Только незавершённые";e.currentTarget.classList.toggle("primary",incomplete);filter()};
+const links=[...document.querySelectorAll(".nav a")];new IntersectionObserver(es=>{const v=es.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(v)links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+v.target.id))},{rootMargin:"-20% 0px -65% 0px",threshold:[.05,.2,.5]}).observe(document.getElementById("start"));document.querySelectorAll("main section[id]").forEach((s,i)=>{if(i)new IntersectionObserver(es=>{if(es[0].isIntersecting)links.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+s.id))},{rootMargin:"-20% 0px -65% 0px",threshold:.05}).observe(s)});
+window.onkeydown=e=>{if(e.key==="Escape"){modal.classList.remove("open");side.classList.remove("open")}}})();
+</script>
+</body>
+</html>

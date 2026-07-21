@@ -1,0 +1,42 @@
+{
+  "name": "frontend-mentor-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "pnpm --parallel --filter @mentor/web --filter @mentor/api dev",
+    "dev:web": "pnpm --filter @mentor/web dev",
+    "dev:api": "pnpm --filter @mentor/api dev",
+    "dev:bot": "pnpm --filter @mentor/bot dev",
+    "dev:scheduler": "pnpm --filter @mentor/api dev:scheduler",
+    "start:scheduler": "pnpm --filter @mentor/api start:scheduler",
+    "db:seed": "pnpm --filter @mentor/api db:seed",
+    "db:backup": "pnpm --filter @mentor/api db:backup",
+    "db:verify": "pnpm --filter @mentor/api db:verify",
+    "content:validate": "pnpm --filter @mentor/content validate",
+    "content:sources:sync": "pnpm --filter @mentor/content sources:sync",
+    "build": "pnpm -r build",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "test:runtime": "pnpm --filter @mentor/api test:runtime && pnpm --filter @mentor/bot test:runtime",
+    "test:e2e": "pnpm --filter @mentor/web build && playwright test",
+    "smoke:production": "node scripts/production-smoke.mjs",
+    "check": "pnpm format:check && pnpm content:validate && pnpm lint && pnpm typecheck && pnpm test && pnpm build && pnpm test:runtime"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.0",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.15.30",
+    "eslint": "^9.30.0",
+    "eslint-config-prettier": "^10.1.5",
+    "prettier": "^3.5.3",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.35.0",
+    "vitest": "^3.2.4"
+  }
+}
