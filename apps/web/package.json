@@ -14,7 +14,7 @@
     "@fontsource/manrope": "^5.2.5",
     "@mentor/shared": "workspace:*",
     "@tanstack/react-query": "^5.80.7",
-    "lucide-react": "^0.511.0",
+    "lucide-react": "^1.25.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
