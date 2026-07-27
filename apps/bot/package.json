@@ -14,7 +14,7 @@
   "dependencies": {
     "@mentor/shared": "workspace:*",
     "fastify": "^5.4.0",
-    "grammy": "^1.44.0"
+    "grammy": "^1.45.1"
   },
   "devDependencies": {
     "@types/node": "^22.15.30",
