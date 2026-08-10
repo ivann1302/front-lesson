@@ -13,12 +13,12 @@
   },
   "dependencies": {
     "@mentor/shared": "workspace:*",
-    "fastify": "^5.4.0",
-    "grammy": "^1.44.0"
+    "fastify": "^5.11.2",
+    "grammy": "^1.45.1"
   },
   "devDependencies": {
     "@types/node": "^22.15.30",
-    "tsx": "^4.20.3",
+    "tsx": "^4.23.10",
     "typescript": "^5.8.3",
     "vitest": "^3.2.4"
   }
