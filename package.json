@@ -29,14 +29,14 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.30.0",
-    "@playwright/test": "^1.55.0",
+    "@playwright/test": "^1.62.1",
     "@types/node": "^22.15.30",
     "eslint": "^9.30.0",
     "eslint-config-prettier": "^10.1.5",
-    "prettier": "^3.5.3",
-    "tsx": "^4.20.3",
+    "prettier": "^3.9.6",
+    "tsx": "^4.23.13",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.35.0",
+    "typescript-eslint": "^8.69.0",
     "vitest": "^3.2.4"
   }
 }
