@@ -80,7 +80,7 @@ ENV VITE_API_URL=/api
 
 RUN pnpm --filter @mentor/web... build
 
-FROM nginx:1.30.4-alpine AS web
+FROM nginx:1.31.7-alpine AS web
 
 COPY apps/web/nginx.conf /etc/nginx/nginx.conf
 COPY --from=web-build --chown=nginx:nginx /workspace/apps/web/dist /usr/share/nginx/html
